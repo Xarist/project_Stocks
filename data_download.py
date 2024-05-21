@@ -1,4 +1,6 @@
 import yfinance as yf
+# import pandas as pd
+import pandas_ta as ta
 
 
 def fetch_stock_data(ticker, period='1mo'):
@@ -14,4 +16,14 @@ def add_moving_average(data, window_size=5):
 
 def calculate_and_display_average_price(data):
     data['Average_Price'] = data['Close'].mean()
+    return data
+
+
+def calculate_rsi(data, window_size=14):
+    data['RSI'] = ta.rsi(data['Close'], window=window_size)
+    return data
+
+
+def calculate_macd(data):
+    data_macd = data.ta.macd(close='Close', fast=12, slow=26, signal=9, append=True)
     return data

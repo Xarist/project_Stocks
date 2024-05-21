@@ -29,13 +29,26 @@ def main():
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
 
+    # Calculate and display the average price
     stock_data = dd.calculate_and_display_average_price(stock_data)
 
+    # Сalculation of strong closing price fluctuations
     print(f'Cредняя цена закрытия акций за заданный период составляет {max(stock_data["Average_Price"].round(2))}')
     notify_if_strong_fluctuations(data=stock_data, value=threshold)
 
+    # Calculate the RSI
+    stock_data = dd.calculate_rsi(stock_data)
+    # Calculate the MACD
+    stock_data = dd.calculate_macd(stock_data)
+
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
+
+    # Plot the macd
+    dplt.plot_macd(stock_data, ticker, period)
+
+    # Plot the rsi
+    dplt.plot_rsi(stock_data, ticker, period)
 
     # Save the data
     s.export_data_to_csv(stock_data, ticker, period)
