@@ -1,5 +1,6 @@
 import data_download as dd
 import data_plotting as dplt
+import save_data as s
 
 
 def notify_if_strong_fluctuations(data, value):
@@ -8,6 +9,7 @@ def notify_if_strong_fluctuations(data, value):
     if max(data["Close"].round(2)) - min(data["Close"].round(2)) > value:
         print(f'Сильные колебания цены закрытия: {round((max(data["Close"]) - min(data["Close"])), 4)}')
     print()
+
 
 def main():
     print("Добро пожаловать в инструмент получения и построения графиков биржевых данных.")
@@ -34,6 +36,9 @@ def main():
 
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
+
+    # Save the data
+    s.export_data_to_csv(stock_data, ticker, period)
 
 
 if __name__ == "__main__":
