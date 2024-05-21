@@ -4,6 +4,9 @@ import save_data as sd
 
 
 def create_and_save_plot(data, ticker, period, start, end):
+    # print(plt.style.available) # список доступных стилей
+    theme = input('Укажите стиль оформления графика: ')
+    plt.style.use(theme)
     plt.figure(figsize=(12, 6))
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
@@ -30,6 +33,8 @@ def create_and_save_plot(data, ticker, period, start, end):
 
 
 def plot_macd(data, ticker, period, start, end):
+    theme = input('Укажите стиль оформления графика MACD: ')
+    plt.style.use(theme)
     plt.figure(figsize=(12, 6))
     plt.plot(data.index, data['MACD_12_26_9'], label='MACD', color='blue')
     plt.plot(data.index, data['MACDs_12_26_9'], label='Signal Line', color='red')
@@ -42,6 +47,8 @@ def plot_macd(data, ticker, period, start, end):
     
 
 def plot_rsi(data, ticker, period, start, end):
+    theme = input('Укажите стиль оформления графика RSI: ')
+    plt.style.use(theme)
     plt.figure(figsize=(12, 6))
     plt.plot(data.index, data['RSI'], label='RSI', color='orange')
     plt.axhline(y=70, color='red', linestyle='--')
