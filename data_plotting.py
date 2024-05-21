@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import save_data as sd
 
 
-def create_and_save_plot(data, ticker, period):
+def create_and_save_plot(data, ticker, period, start, end):
     plt.figure(figsize=(12, 6))
     if 'Date' not in data:
         if pd.api.types.is_datetime64_any_dtype(data.index):
@@ -23,24 +24,30 @@ def create_and_save_plot(data, ticker, period):
     plt.xlabel("Дата")
     plt.ylabel("Цена")
     plt.legend()
-    plt.savefig(f"{ticker}_{period}_stock_price_chart.png")
+    filename = f'{sd.determine_filename(ticker, period, start, end)} stock_price_chart.png'
+    plt.savefig(filename)
+    print(f'График цен закрытия, скользящего среднего и средней цены сохранен как {filename}')
 
 
-def plot_macd(data, ticker, period):
+def plot_macd(data, ticker, period, start, end):
     plt.figure(figsize=(12, 6))
     plt.plot(data.index, data['MACD_12_26_9'], label='MACD', color='blue')
     plt.plot(data.index, data['MACDs_12_26_9'], label='Signal Line', color='red')
     plt.bar(data.index, data['MACDh_12_26_9'], label='MACD Histogram', color='grey')
     plt.title(f'MACD {ticker.upper()}')
     plt.legend(loc='upper left')
-    plt.savefig(f"{ticker}_{period}_macd_chart.png")
+    filename = f'{sd.determine_filename(ticker, period, start, end)} macd_chart.png'
+    plt.savefig(filename)
+    print(f'График MACD сохранен как {filename}')
     
 
-def plot_rsi(data, ticker, period):
+def plot_rsi(data, ticker, period, start, end):
     plt.figure(figsize=(12, 6))
     plt.plot(data.index, data['RSI'], label='RSI', color='orange')
     plt.axhline(y=70, color='red', linestyle='--')
     plt.axhline(y=30, color='green', linestyle='--')
     plt.title(f'RSI {ticker.upper()}')
     plt.legend(loc='upper left')
-    plt.savefig(f"{ticker}_{period}_rsi_chart.png")
+    filename = f"{sd.determine_filename(ticker, period, start, end)} rsi_chart.png"
+    plt.savefig(filename)
+    print(f'График RSI сохранен как {filename}')

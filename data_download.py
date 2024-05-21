@@ -3,9 +3,12 @@ import yfinance as yf
 import pandas_ta as ta
 
 
-def fetch_stock_data(ticker, period='1mo'):
+def fetch_stock_data(ticker, period='1mo', start=None, end=None):
     stock = yf.Ticker(ticker)
-    data = stock.history(period=period)
+    if start and end:
+        data = stock.history(start=start, end=end)
+    else:
+        data = stock.history(period=period)
     return data
 
 

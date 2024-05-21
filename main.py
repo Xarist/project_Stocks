@@ -19,12 +19,21 @@ def main():
         "Общие периоды времени для данных о запасах включают: 1д, 5д, 1мес, 3мес, 6мес, 1г, 2г, 5г, 10л, с начала года, макс.")
     print()
     ticker = input("Введите тикер акции (например, «AAPL» для Apple Inc): ")
-    period = input("Введите период для данных (например, '1mo' для одного месяца): ")
+    choice = input("Хотите указать период (p) или даты начала и конца (d)? Введите 'p' или 'd': ").strip().lower()
+    if choice == 'p':
+        period = input("Введите период (например, 1mo, 3mo, 1y): ").strip()
+        start = None
+        end = None
+    elif choice == 'd':
+        period = None
+        start = input("Введите дату начала в формате YYYY-MM-DD: ").strip()
+        end = input("Введите дату конца в формате YYYY-MM-DD: ").strip()
+
     threshold = float(input("Введите пороговое значение колебания цены: "))
     print()
 
     # Fetch stock data
-    stock_data = dd.fetch_stock_data(ticker, period)
+    stock_data = dd.fetch_stock_data(ticker, period, start, end)
 
     # Add moving average to the data
     stock_data = dd.add_moving_average(stock_data)
@@ -38,20 +47,21 @@ def main():
 
     # Calculate the RSI
     stock_data = dd.calculate_rsi(stock_data)
+
     # Calculate the MACD
     stock_data = dd.calculate_macd(stock_data)
 
     # Plot the data
-    dplt.create_and_save_plot(stock_data, ticker, period)
+    dplt.create_and_save_plot(stock_data, ticker, period, start, end)
 
     # Plot the macd
-    dplt.plot_macd(stock_data, ticker, period)
+    dplt.plot_macd(stock_data, ticker, period, start, end)
 
     # Plot the rsi
-    dplt.plot_rsi(stock_data, ticker, period)
+    dplt.plot_rsi(stock_data, ticker, period, start, end)
 
     # Save the data
-    s.export_data_to_csv(stock_data, ticker, period)
+    s.export_data_to_csv(stock_data, ticker, period, start, end)
 
 
 if __name__ == "__main__":
