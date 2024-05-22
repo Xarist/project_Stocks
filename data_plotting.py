@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import save_data as sd
+import plotly.graph_objects as go
 
 
 def create_and_save_plot(data, ticker, period, start, end):
@@ -70,3 +71,9 @@ def plot_std_dev(data, ticker, period, start, end):
     filename = f"{sd.determine_filename(ticker, period, start, end)} std_dev_chart.png"
     plt.savefig(filename)
     print(f'График стандартного отклонения сохранен как {filename}')
+
+
+def interactive_plot(data, ticker):
+    fig = go.Figure(data=[go.Scatter(x=data.index, y=data['Close'])])
+    fig.update_layout(title=f"Цена закрытия акций {ticker.upper()}", xaxis_title="Дата закрытия", yaxis_title="Цена закрытия")
+    fig.show()
