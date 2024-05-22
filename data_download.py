@@ -30,3 +30,8 @@ def calculate_rsi(data, window_size=14):
 def calculate_macd(data):
     data_macd = data.ta.macd(close='Close', fast=12, slow=26, signal=9, append=True)
     return data
+
+
+def calculate_deviation(data):
+    data['Std_Dev'] = data['Close'].rolling(20).std()
+    return data

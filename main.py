@@ -51,6 +51,9 @@ def main():
     # Calculate the MACD
     stock_data = dd.calculate_macd(stock_data)
 
+    # Calculate the Deviation
+    stock_data = dd.calculate_deviation(stock_data)
+
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period, start, end)
 
@@ -59,6 +62,9 @@ def main():
 
     # Plot the rsi
     dplt.plot_rsi(stock_data, ticker, period, start, end)
+
+    # Plot the deviation
+    dplt.plot_std_dev(stock_data, ticker, period, start, end)
 
     # Save the data
     s.export_data_to_csv(stock_data, ticker, period, start, end)

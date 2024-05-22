@@ -13,7 +13,7 @@ def create_and_save_plot(data, ticker, period, start, end):
             dates = data.index.to_numpy()
             plt.plot(dates, data['Close'].values, label='Close Price')
             plt.plot(dates, data['Moving_Average'].values, label='Moving Average')
-            plt.plot(dates, data['Average_Price'].values, label=f'Average Volume')
+            plt.plot(dates, data['Average_Price'].values, label='Average Volume')
         else:
             print("Информация о дате отсутствует или не имеет распознаваемого формата.")
             return
@@ -22,7 +22,7 @@ def create_and_save_plot(data, ticker, period, start, end):
             data['Date'] = pd.to_datetime(data['Date'])
         plt.plot(data['Date'], data['Close'], label='Close Price')
         plt.plot(data['Date'], data['Moving_Average'], label='Moving Average')
-        plt.plot(data['Date'], data['Average_Price'], label=f'Average Volume')
+        plt.plot(data['Date'], data['Average_Price'], label='Average Volume')
     plt.title(f"{ticker.upper()} Цена акций с течением времени")
     plt.xlabel("Дата")
     plt.ylabel("Цена")
@@ -44,7 +44,7 @@ def plot_macd(data, ticker, period, start, end):
     filename = f'{sd.determine_filename(ticker, period, start, end)} macd_chart.png'
     plt.savefig(filename)
     print(f'График MACD сохранен как {filename}')
-    
+
 
 def plot_rsi(data, ticker, period, start, end):
     theme = input('Укажите стиль оформления графика RSI: ')
@@ -58,3 +58,15 @@ def plot_rsi(data, ticker, period, start, end):
     filename = f"{sd.determine_filename(ticker, period, start, end)} rsi_chart.png"
     plt.savefig(filename)
     print(f'График RSI сохранен как {filename}')
+
+
+def plot_std_dev(data, ticker, period, start, end):
+    theme = input('Укажите стиль оформления графика стандартного отклонения: ')
+    plt.style.use(theme)
+    plt.figure(figsize=(12, 6))
+    plt.plot(data.index, data['Std_Dev'], label='Standard Deviation', color='purple')
+    plt.title(f'Standard Deviation {ticker.upper()}')
+    plt.legend(loc='upper left')
+    filename = f"{sd.determine_filename(ticker, period, start, end)} std_dev_chart.png"
+    plt.savefig(filename)
+    print(f'График стандартного отклонения сохранен как {filename}')
