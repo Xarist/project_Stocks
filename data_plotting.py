@@ -76,5 +76,4 @@ def plot_std_dev(data, ticker, period, start, end):
 def interactive_plot(data, ticker):
     fig = go.Figure(data=[go.Scatter(x=data.index, y=data['Close'])])
     fig.update_layout(title=f"Цена закрытия акций {ticker.upper()}", xaxis_title="Дата закрытия", yaxis_title="Цена закрытия")
-
     fig.show()
