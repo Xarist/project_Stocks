@@ -66,6 +66,9 @@ def main():
     # Plot the deviation
     dplt.plot_std_dev(stock_data, ticker, period, start, end)
 
+    # The interactive plot
+    dplt.interactive_plot(stock_data, ticker)
+
     # Save the data
     s.export_data_to_csv(stock_data, ticker, period, start, end)
 
